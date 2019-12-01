@@ -1,0 +1,15 @@
+{
+  "name": "jackbot-discord",
+  "version": "1.0.0",
+  "description": "We've gone full circle. jackᵇᵒᵗ + discord.js",
+  "main": "index",
+  "author": "Jack <29169102+Jack5079@users.noreply.github.com>",
+  "license": "MIT",
+  "installConfig": {
+    "pnp": true
+  },
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0"
+  }
+}
