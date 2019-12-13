@@ -48,4 +48,8 @@ module.exports = class {
       })
     }
   }
+
+  get (name) {
+    return bot.commands[name]
+  }
 }
