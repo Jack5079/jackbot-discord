@@ -7,7 +7,7 @@ module.exports = class {
     this.client = new Client() // create the discord client
     this.commands = commands
     this.client.on('message', message => { // When a message is sent
-      if (message.guild.me !== message.member) { // bot shouldn't respond to itself issuing a command
+      if (message.author.bot) {
         Object.keys(this.commands).forEach(name => {
         // For every command
         // example commmand: -test hello
