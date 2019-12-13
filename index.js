@@ -20,7 +20,7 @@ module.exports = class {
             const args = message.content
               .substring(options.prefix.length + 1 + name.length)
               .split(' ') // Make the args array
-            console.log(`${message.member.displayName} used the ${options.prefix}${name} command.`)
+            console.log(`${message.author.username} used the ${options.prefix}${name} command.`)
             this.commands[name](message, args, this) // Run the command!
           }
         })
