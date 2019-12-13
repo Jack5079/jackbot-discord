@@ -50,6 +50,6 @@ module.exports = class {
   }
 
   get (name) {
-    return bot.commands[name]
+    return this.commands[name]
   }
 }
