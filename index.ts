@@ -41,7 +41,7 @@ class Bot {
     this.client.login(options.token)
   }
 
-  add (name: string, func: Function) {
+  add (name: string, func: Function): void {
     if (name && func) this.commands[name] = func
     if (typeof name === 'object') {
       Object.keys(name).forEach(com => {
@@ -50,7 +50,7 @@ class Bot {
     }
   }
 
-  remove (name: string | Array<string>) {
+  remove (name: string | Array<string>): void {
     if (typeof name === 'string') delete this.commands[name]
 
     if (name instanceof Array) {
@@ -60,7 +60,7 @@ class Bot {
     }
   }
 
-  get (name: string) {
+  get (name: string): Function {
     return this.commands[name]
   }
 }
