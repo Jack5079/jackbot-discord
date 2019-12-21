@@ -8,7 +8,7 @@ class Bot {
   commands: Object
   client: Client
   constructor (
-    commands?:Object = {},
+    commands? = {},
     options = {
       prefix: '-',
       token: '' // the token
