@@ -1,6 +1,6 @@
 {
   "name": "jackbot-discord",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "like my website (jackbot) but it works on discord",
   "module": "index.js",
   "author": "Jack <29169102+Jack5079@users.noreply.github.com>",
