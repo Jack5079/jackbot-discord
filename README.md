@@ -2,14 +2,16 @@
 
 kinda makes it easier to make bots on discord
 
-okay so here's a quick demo
+okay so here's a quick bot just to show how easy it is
 
-```js
-let Bot = require('jackbot-disocrd')
+```ts
+// bot.ts
+import Bot from 'jackbot-discord'
+import {Message} from 'discord-js'
 
 let bot = new Bot({
    // The command list
-    repeat (message, args) {
+    repeat (message: Message, args: Array<string>) {
       // Repeats what the user typed after
       message.channel.send(args.join(' '))
     }
