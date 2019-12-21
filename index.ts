@@ -8,7 +8,7 @@ class Bot {
   commands: Object
   client: Client
   constructor (
-    commands? = {},
+    commands = {},
     options = {
       prefix: '-',
       token: '' // the token
@@ -69,7 +69,7 @@ class Bot {
 //   this.add(obj.name, obj.function)
 // })
 
-  }
+  // }
 
   remove (name: string | Array<string>): void {
     if (typeof name === 'string') delete this.commands[name]
