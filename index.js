@@ -1,7 +1,7 @@
 const { Client } = require('discord.js')
 
 module.exports = class {
-  constructor (commands, options = {
+  constructor (commands = {}, options = {
     prefix: '-'
   }) {
     this.client = new Client() // create the discord client
