@@ -1,5 +1,5 @@
 import { Client, Message } from 'discord.js'
-import {readdirSync} from 'fs'
+// import {readdirSync} from 'fs'
 // type CommandFile = {
 //   function: Function
 //   name: string
