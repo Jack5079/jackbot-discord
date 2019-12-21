@@ -1,8 +1,8 @@
 {
   "name": "jackbot-discord",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "like my website (jackbot) but it works on discord",
-  "main": "index",
+  "main": "index.js",
   "author": "Jack <29169102+Jack5079@users.noreply.github.com>",
   "license": "MIT",
   "installConfig": {
@@ -10,5 +10,9 @@
   },
   "dependencies": {
     "discord.js": "^11.5.1"
+  },
+  "devDependencies": {
+    "@yarnpkg/pnpify": "^2.0.0-rc.12",
+    "typescript": "^3.7.4"
   }
 }
