@@ -1,5 +1,8 @@
 import { Client, Message } from 'discord.js'
-
+type CommandFile = {
+  function: Function
+  name: string
+}
 class Bot {
   commands: Object
   client: Client
@@ -48,6 +51,23 @@ class Bot {
         this.commands[com] = name[com]
       })
     }
+  }
+
+  addDir(dir: string): void {
+
+const commands = readdirSync(dir) // array of paths
+  .map(
+    (e: String): CommandFile => {
+      return {
+        function: require('./commands/' + e),
+        name: e.replace(/\.(.*)/, '') // Remove the dot and anything after
+      }
+    }
+  )
+commands.forEach((obj: CommandFile): void => {
+  this.add(obj.name, obj.function)
+})
+
   }
 
   remove (name: string | Array<string>): void {
