@@ -4,19 +4,17 @@ import { Client, Message } from 'discord.js'
 //   function: Function
 //   name: string
 // }
-class Bot {
+class Bot extends Client {
   commands: Object
-  client: Client
   constructor (
     commands = {},
     options = {
-      prefix: '-',
-      token: '' // the token
+      prefix: '-'
     }
   ) {
-    this.client = new Client() // create the discord client
+    super()
     this.commands = commands
-    this.client.on('message', (message: Message) => {
+    this.on('message', (message: Message) => {
       // When a message is sent
       if (!message.author.bot) {
         // not a bot
@@ -41,8 +39,6 @@ class Bot {
         })
       }
     })
-
-    this.client.login(options.token)
   }
 
   add (name: string, func: Function): void {
