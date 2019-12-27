@@ -4,6 +4,8 @@ import { Client, Message } from 'discord.js'
 //   function: Function
 //   name: string
 // }
+
+type Arguments = Array<String>
 class Bot extends Client {
   commands: Object
   constructor (
@@ -83,3 +85,8 @@ class Bot extends Client {
 }
 
 export default Bot
+
+export {
+  Message,
+  Arguments
+}
