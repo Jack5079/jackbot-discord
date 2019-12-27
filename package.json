@@ -1,8 +1,8 @@
 {
   "name": "jackbot-discord",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "like my website (jackbot) but it works on discord",
-  "module": "index.js",
+  "main": "index.js",
   "author": "Jack <29169102+Jack5079@users.noreply.github.com>",
   "license": "MIT",
   "installConfig": {
