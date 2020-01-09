@@ -2,7 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "ES2019",
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "declaration": true
   },
   "exclude": [
     "node_modules",
