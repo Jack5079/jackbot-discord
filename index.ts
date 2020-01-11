@@ -1,11 +1,7 @@
 import { Client, Message } from 'discord.js'
-// import {readdirSync} from 'fs'
-// type CommandFile = {
-//   function: Function
-//   name: string
-// }
+import { resolve } from 'path'
+import { PathLike, readdirSync } from 'fs'
 
-type Arguments = Array<String>
 class Bot extends Client {
   commands: Object
   constructor (
@@ -52,22 +48,12 @@ class Bot extends Client {
     }
   }
 
-//   addDir(dir: string): void {
 
-// const commands = readdirSync(dir) // array of paths
-//   .map(
-//     (e: String): CommandFile => {
-//       return {
-//         function: require('./commands/' + e),
-//         name: e.replace(/\.(.*)/, '') // Remove the dot and anything after
-//       }
-//     }
-//   )
-// commands.forEach((obj: CommandFile): void => {
-//   this.add(obj.name, obj.function)
-// })
-
-  // }
+  loadDir (dir: PathLike) {
+    readdirSync(resolve(process.cwd(), dir + '/'), 'utf-8').filter(filename => filename.endsWith('.js')).forEach(async file => {
+      this.add(file.replace('.js', ''), (await import('./commands/' + file)).default)
+    })
+  }
 
   remove (name: string | Array<string>): void {
     if (typeof name === 'string') delete this.commands[name]
