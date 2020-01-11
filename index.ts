@@ -4,7 +4,7 @@ import { PathLike, readdirSync } from 'fs'
 
 class Bot extends Client {
   commands: Object
-  constructor (
+  constructor(
     commands = {},
     options = {
       prefix: '-'
@@ -32,7 +32,7 @@ class Bot extends Client {
             console.log(
               `${message.author.username} used the ${options.prefix}${name} command.`
             )
-            this.commands[name](message, args, this) // Run the command!
+            this.commands[ name ](message, args, this) // Run the command!
           }
         })
       }
@@ -40,10 +40,10 @@ class Bot extends Client {
   }
 
   add (name: string, func: Function): void {
-    if (name && func) this.commands[name] = func
+    if (name && func) this.commands[ name ] = func
     if (typeof name === 'object') {
       Object.keys(name).forEach(com => {
-        this.commands[com] = name[com]
+        this.commands[ com ] = name[ com ]
       })
     }
   }
@@ -56,23 +56,18 @@ class Bot extends Client {
   }
 
   remove (name: string | Array<string>): void {
-    if (typeof name === 'string') delete this.commands[name]
+    if (typeof name === 'string') delete this.commands[ name ]
 
     if (name instanceof Array) {
       name.forEach(com => {
-        delete this.commands[com]
+        delete this.commands[ com ]
       })
     }
   }
 
   get (name: string): Function {
-    return this.commands[name]
+    return this.commands[ name ]
   }
 }
 
 export default Bot
-
-export {
-  Message,
-  Arguments
-}
