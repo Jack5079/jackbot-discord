@@ -1,4 +1,4 @@
-import { Client, Message } from 'discord.js'
+import { Client } from 'discord.js'
 
 interface Commands {
   [ key: string ]: Function
@@ -13,17 +13,17 @@ class Bot extends Client {
   ) {
     super()
     this.commands = commands
-    this.on('message', (message: Message) => {
+    this.on('message', message => {
       // When a message is sent
       if (!message.author.bot) {
         // not a bot
-        Object.keys(this.commands).forEach((name: string) => {
+        Object.keys(this.commands).forEach(name => {
           // For every command
           // example commmand: -test hello
           // example command with spaces: -a test hello
           if (
-            message.content.startsWith(`${options.prefix}${name} `) || // matches any command with a space after
-            message.content === `${options.prefix}${name}`
+            message.content.startsWith(`${options.prefix}${name} `) // matches any command with a space after
+            || message.content === `${options.prefix}${name}` // matches any command without arguments
           ) {
             // matches commands that are just the command
             // If it matches a command
