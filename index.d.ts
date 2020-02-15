@@ -1,9 +1,12 @@
 /// <reference types="node" />
 import { Client } from 'discord.js';
 import { PathLike } from 'fs';
+interface Commands {
+    [key: string]: Function;
+}
 declare class Bot extends Client {
-    commands: Object;
-    constructor(commands?: {}, options?: {
+    commands: Commands;
+    constructor(commands?: Commands, options?: {
         prefix: string;
     });
     add(name: string, func: Function): void;

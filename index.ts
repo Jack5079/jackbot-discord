@@ -2,10 +2,13 @@ import { Client, Message } from 'discord.js'
 import { resolve } from 'path'
 import { PathLike, readdirSync } from 'fs'
 
+interface Commands {
+  [ key: string ]: Function
+}
 class Bot extends Client {
-  commands: Object
+  commands: Commands
   constructor(
-    commands = {},
+    commands: Commands = {},
     options = {
       prefix: '-'
     }
@@ -16,7 +19,7 @@ class Bot extends Client {
       // When a message is sent
       if (!message.author.bot) {
         // not a bot
-        Object.keys(this.commands).forEach(name => {
+        Object.keys(this.commands).forEach((name: string) => {
           // For every command
           // example commmand: -test hello
           // example command with spaces: -a test hello
