@@ -17,28 +17,23 @@ class Bot extends Client {
       // When a message is sent
       if (!message.author.bot) {
         // not a bot
-        Object.keys(this.commands).forEach(name => {
-          // For every command
-          // example commmand: -test hello
-          // example command with spaces: -a test hello
-          if (
-            message.content.startsWith(`${options.prefix}${name} `) // matches any command with a space after
-            || message.content === `${options.prefix}${name}` // matches any command without arguments
-          ) {
-            // matches commands that are just the command
-            // If it matches a command
-            const args = message.content
-              .substring(options.prefix.length + 1 + name.length)
-              .split(' ') // Make the args array
-            console.log(
-              `${message.author.username} used the ${options.prefix}${name} command.`
-            )
-            this.commands[ name ](message, args, this) // Run the command!
-          }
-        })
+        // matches commands that are just the command
+        const name = Object.keys(this.commands).find(cmdname => {
+          return message.content.startsWith(`${options.prefix}${cmdname} `) // matches any command with a space after
+            || message.content === `${options.prefix}${cmdname}`
+        }) // matches any command without arguments)
+
+        // Run the command!
+        if (name) this.commands[ name ](message,
+          // The arguments
+          message.content // the message
+            .substring(options.prefix.length + 1 + name.length) // only the part after the command
+            .split(' ') // split with spaces
+          , this) // The bot
       }
     })
   }
+
 
   add (name: string | Commands, func: Function): void {
     if (typeof name === 'string') this.commands[ name ] = func
