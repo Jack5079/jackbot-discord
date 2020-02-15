@@ -1,6 +1,4 @@
 import { Client, Message } from 'discord.js'
-import { resolve } from 'path'
-import { PathLike, readdirSync } from 'fs'
 
 interface Commands {
   [ key: string ]: Function
@@ -42,20 +40,13 @@ class Bot extends Client {
     })
   }
 
-  add (name: string, func: Function): void {
-    if (name && func) this.commands[ name ] = func
+  add (name: string | Commands, func: Function): void {
+    if (typeof name === 'string') this.commands[ name ] = func
     if (typeof name === 'object') {
       Object.keys(name).forEach(com => {
         this.commands[ com ] = name[ com ]
       })
     }
-  }
-
-
-  loadDir (dir: PathLike) {
-    readdirSync(resolve(process.cwd(), dir + '/'), 'utf-8').filter(filename => filename.endsWith('.js')).forEach(async file => {
-      this.add(file.replace('.js', ''), (await import('./commands/' + file)).default)
-    })
   }
 
   remove (name: string | Array<string>): void {
