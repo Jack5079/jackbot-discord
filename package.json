@@ -17,6 +17,6 @@
     "typescript": "^3.7.4"
   },
   "scripts": {
-    "prepublishOnly": "npx tsc"
+    "prepublishOnly": "tsc"
   }
 }
