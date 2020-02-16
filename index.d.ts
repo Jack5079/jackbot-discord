@@ -7,7 +7,7 @@ declare class Bot extends Client {
     constructor(commands?: Commands, options?: {
         prefix: string;
     });
-    add(name: string | Commands, func: Function): void;
+    add(name: string | Commands, func?: Function): void | Function;
     remove(name: string | Array<string>): void;
     get(name: string): Function;
 }
