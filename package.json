@@ -1,6 +1,6 @@
 {
   "name": "jackbot-discord",
-  "version": "7.3.0",
+  "version": "7.4.0",
   "description": "like my website (jackbot) but it works on discord",
   "main": "index.js",
   "author": "Jack <29169102+Jack5079@users.noreply.github.com>",
@@ -18,5 +18,10 @@
   },
   "scripts": {
     "prepublishOnly": "tsc"
-  }
+  },
+  "keywords": [
+    "discord",
+    "commands",
+    "command"
+  ]
 }
