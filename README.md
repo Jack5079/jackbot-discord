@@ -9,7 +9,7 @@ okay so here's a quick bot just to show how easy it is
 import Bot from 'jackbot-discord'
 import { Message } from 'discord-js'
 
-let bot = new Bot(
+const bot = new Bot(
   {
     // The command list
     repeat (message: Message, args: Array<string>) {
@@ -18,8 +18,11 @@ let bot = new Bot(
     }
   },
   {
-    token: 'Your bot token here', // the token to run the bot on
     prefix: '-' // what's before every command
   }
 )
+
+bot.login('Your bot token here')
 ```
+
+After opening the bot, do `-repeat Hello, world!`
