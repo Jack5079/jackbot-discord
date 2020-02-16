@@ -6,13 +6,10 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "removeComments": true,
-    "jsx": "preserve",
     "declaration": true
   },
   "exclude": [
     "node_modules",
-    "**/node_modules/*",
-    ".yarn",
-    ".pnp.js"
+    "**/node_modules/*"
   ]
 }

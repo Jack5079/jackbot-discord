@@ -20,13 +20,14 @@ class Bot extends Client {
         // matches commands that are just the command
         const name = Object.keys(this.commands).find(cmdname => {
           return message.content.startsWith(`${options.prefix}${cmdname} `) // matches any command with a space after
-            || message.content === `${options.prefix}${cmdname}`
-        }) // matches any command without arguments)
+            || message.content === `${options.prefix}${cmdname}` // matches any command without arguments
+        })
 
         // Run the command!
-        if (name) this.commands[ name ](message,
+        if (name) this.commands[ name ](
+          message, // the message
           // The arguments
-          message.content // the message
+          message.content // the content of the message
             .substring(options.prefix.length + 1 + name.length) // only the part after the command
             .split(' ') // split with spaces
           , this) // The bot
@@ -35,13 +36,13 @@ class Bot extends Client {
   }
 
 
-  add (name: string | Commands, func: Function): void {
-    if (typeof name === 'string') this.commands[ name ] = func
-    if (typeof name === 'object') {
-      Object.keys(name).forEach(com => {
+  add (name: string | Commands, func?: Function): void | Function {
+    if (typeof name === 'object' && !func) {
+      return Object.keys(name).forEach(com => {
         this.commands[ com ] = name[ com ]
       })
     }
+    if (typeof name === 'string' && func) return this.commands[ name ] = func
   }
 
   remove (name: string | Array<string>): void {
