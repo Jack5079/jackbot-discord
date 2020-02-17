@@ -60,4 +60,4 @@ class Bot extends Client {
   }
 }
 
-export default Bot
+export { Message, Commands, Bot }

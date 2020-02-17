@@ -11,4 +11,4 @@ declare class Bot extends Client {
     remove(name: string | Array<string>): void;
     get(name: string): Function;
 }
-export default Bot;
+export { Message, Commands, Bot };
