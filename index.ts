@@ -1,7 +1,7 @@
-import { Client } from 'discord.js'
+import { Client, Message } from 'discord.js'
 
 interface Commands {
-  [ key: string ]: Function
+  [ key: string ]: (message: Message, args: string[], bot: Bot) => any
 }
 class Bot extends Client {
   commands: Commands
@@ -36,7 +36,7 @@ class Bot extends Client {
   }
 
 
-  add (name: string | Commands, func?: Function): void | Function {
+  add (name: string | Commands, func?: (message: Message, args: string[], bot: Bot) => any): void | Function {
     if (typeof name === 'object' && !func) {
       return Object.keys(name).forEach(com => {
         this.commands[ com ] = name[ com ]
