@@ -14,7 +14,7 @@ import { Message } from 'discord-js'
 const bot = new Bot(
   {
     // The command list
-    repeat (message: Message, args: Array<string>) {
+    repeat (message: Message, args: string[]) {
       // Repeats what the user typed after
       message.channel.send(args.join(' '))
     }
@@ -39,7 +39,7 @@ import { Message } from 'discord-js'
 const bot = new Bot(
   {
     // The command list
-    "Can you please say": (message: Message, args: Array<string>) => {
+    "Can you please say": (message: Message, args: string[])=> {
       // Repeats what the user typed after
       message.channel.send(args.join(' '))
     }
