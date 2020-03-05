@@ -1,7 +1,9 @@
 import { Client, Message } from 'discord.js'
 
+type Command = (message: Message, args: string[], bot: Bot) => any
+
 interface Commands {
-  [ key: string ]: (message: Message, args: string[], bot: Bot) => any
+  [ key: string ]: Command
 }
 class Bot extends Client {
   commands: Commands
@@ -36,7 +38,7 @@ class Bot extends Client {
   }
 
 
-  add (name: string | Commands, func?: (message: Message, args: string[], bot: Bot) => any): void | Function {
+  add (name: string | Commands, func?: Command): void | Function {
     if (typeof name === 'object' && !func) {
       return Object.keys(name).forEach(com => {
         this.commands[ com ] = name[ com ]
@@ -60,4 +62,9 @@ class Bot extends Client {
   }
 }
 
-export { Message, Commands, Bot }
+export {
+  Message,
+  Commands,
+  Command,
+  Bot
+}
