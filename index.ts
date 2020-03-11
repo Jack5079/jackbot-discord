@@ -37,14 +37,15 @@ class Bot extends Client {
     })
   }
 
-
-  add (name: string | Commands, func?: Command): void | Function {
+  add (commands: Commands): void
+  add (name: string, func: Command): void
+  add (name: string | Commands, func?: Command): void {
     if (typeof name === 'object' && !func) {
       return Object.keys(name).forEach(com => {
         this.commands[ com ] = name[ com ]
       })
     }
-    if (typeof name === 'string' && func) return this.commands[ name ] = func
+    if (typeof name === 'string' && func) this.commands[ name ] = func
   }
 
   remove (name: string | Array<string>): void {
