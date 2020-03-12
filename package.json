@@ -1,6 +1,6 @@
 {
   "name": "jackbot-discord",
-  "version": "11.0.0",
+  "version": "12.0.0",
   "description": "like my website (jackbot) but it works on discord",
   "main": "index.js",
   "author": "Jack <29169102+Jack5079@users.noreply.github.com>",
@@ -9,7 +9,7 @@
     "pnp": false
   },
   "dependencies": {
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.0.2",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
