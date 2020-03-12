@@ -5,19 +5,26 @@ type Command = (message: Message, args: string[], bot: Bot) => any
 interface Commands {
   [ key: string ]: Command
 }
+
+interface Config {
+  prefix: string,
+  allowbots: boolean
+}
+
 class Bot extends Client {
   commands: Commands
   constructor(
     commands: Commands = {},
-    options = {
-      prefix: '-'
+    options: Config = {
+      prefix: '-',
+      allowbots: false
     }
   ) {
     super()
     this.commands = commands
     this.on('message', message => {
       // When a message is sent
-      if (!message.author.bot) {
+      if (options.allowbots || !message.author.bot) {
         // not a bot
         // matches commands that are just the command
         const name = Object.keys(this.commands).find(cmdname => {
