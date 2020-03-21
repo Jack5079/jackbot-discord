@@ -3,11 +3,11 @@ import { Client, Message } from 'discord.js'
 type Command = (message: Message, args: string[], bot: Bot) => any
 
 interface Commands {
-  [ key: string ]: Command
+  [key: string]: Command
 }
 
 interface Config {
-  prefix: string,
+  prefix: string | string[],
   allowbots: boolean
 }
 
@@ -27,13 +27,22 @@ class Bot extends Client {
       if (options.allowbots || !message.author?.bot) { // oh god
         // not a bot
         // matches commands that are just the command
-        const name = Object.keys(this.commands).find(cmdname => {
-          return (message.content || '').startsWith(`${options.prefix}${cmdname} `) // matches any command with a space after
-            || (message.content || '') === `${options.prefix}${cmdname}` // matches any command without arguments
-        })
+        let name
+        if (typeof options.prefix === 'string') {
+          name = Object.keys(this.commands).find(cmdname => {
+            return (message.content || '').startsWith(`${options.prefix}${cmdname} `) // matches any command with a space after
+              || (message.content || '') === `${options.prefix}${cmdname}` // matches any command without arguments
+          })
+        } else if ('length' in options.prefix) { // is array
+          const prefixes = options.prefix
+          name = Object.keys(this.commands).find(cmdname => {
+            return prefixes.some(prefix => (message.content || '').startsWith(`${prefix}${cmdname} `)) // matches any command with a space after
+              || prefixes.some(prefix => (message.content || '') === `${prefix}${cmdname}`) // matches any command without arguments
+          })
+        }
 
         // Run the command!
-        if (name) this.commands[ name ](
+        if (name) this.commands[name](
           message as Message, // the message
           // The arguments
           (message.content || '')// the content of the message
@@ -49,24 +58,24 @@ class Bot extends Client {
   add (name: string | Commands, func?: Command): void {
     if (typeof name === 'object' && !func) {
       return Object.keys(name).forEach(com => {
-        this.commands[ com ] = name[ com ]
+        this.commands[com] = name[com]
       })
     }
-    if (typeof name === 'string' && func) this.commands[ name ] = func
+    if (typeof name === 'string' && func) this.commands[name] = func
   }
 
   remove (name: string | Array<string>): void {
-    if (typeof name === 'string') delete this.commands[ name ]
+    if (typeof name === 'string') delete this.commands[name]
 
     if (name instanceof Array) {
       name.forEach(com => {
-        delete this.commands[ com ]
+        delete this.commands[com]
       })
     }
   }
 
   get (name: string): Function {
-    return this.commands[ name ]
+    return this.commands[name]
   }
 }
 

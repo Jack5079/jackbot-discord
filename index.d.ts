@@ -4,7 +4,7 @@ interface Commands {
     [key: string]: Command;
 }
 interface Config {
-    prefix: string;
+    prefix: string | string[];
     allowbots: boolean;
 }
 declare class Bot extends Client {
