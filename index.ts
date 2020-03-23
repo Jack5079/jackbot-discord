@@ -50,11 +50,13 @@ class Bot extends Client {
               .substring(options.prefix.length + 1 + name.length) // only the part after the command
               .split(' ') // split with spaces
             , this) // The bot
+          if (output) {
             ; (async () => {
               if (output instanceof Promise) {
                 message.channel?.send(await output)
               } else message.channel?.send(output)
             })()
+          }
         }
       }
     })
