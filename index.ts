@@ -1,6 +1,6 @@
 import { Client, Message, MessageOptions } from 'discord.js'
-
-type Command = (message: Message, args: string[], bot: Bot) => (MessageOptions | string | void)
+type Return = (MessageOptions | string | void)
+type Command = (message: Message, args: string[], bot: Bot) => Return | Promise<Return>
 
 interface Commands {
   [key: string]: Command
@@ -50,7 +50,11 @@ class Bot extends Client {
               .substring(options.prefix.length + 1 + name.length) // only the part after the command
               .split(' ') // split with spaces
             , this) // The bot
-          if (output) message.channel?.send(output)
+            ; (async () => {
+              if (output instanceof Promise) {
+                message.channel?.send(await output)
+              } else message.channel?.send(output)
+            })()
         }
       }
     })
