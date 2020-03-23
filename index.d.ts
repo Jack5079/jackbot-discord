@@ -1,5 +1,5 @@
-import { Client, Message } from 'discord.js';
-declare type Command = (message: Message, args: string[], bot: Bot) => any;
+import { Client, Message, MessageOptions } from 'discord.js';
+declare type Command = (message: Message, args: string[], bot: Bot) => (MessageOptions | string | void);
 interface Commands {
     [key: string]: Command;
 }
