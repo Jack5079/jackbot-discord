@@ -1,5 +1,5 @@
 import { Client, Message } from 'discord.js';
-declare type Command = (this: Bot, message: Message, args: string[]) => any;
+declare type Command = (message: Message, args: string[], bot: Bot) => any;
 interface Commands {
     [key: string]: Command;
 }

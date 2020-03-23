@@ -1,6 +1,6 @@
 import { Client, Message } from 'discord.js'
 
-type Command = (this: Bot, message: Message, args: string[]) => any
+type Command = (message: Message, args: string[], bot: Bot) => any
 
 interface Commands {
   [key: string]: Command
@@ -42,13 +42,13 @@ class Bot extends Client {
         }
 
         // Run the command!
-        if (name) this.commands[name].bind(this)(
+        if (name) this.commands[name](
           message as Message, // the message
           // The arguments
           (message.content || '')// the content of the message
             .substring(options.prefix.length + 1 + name.length) // only the part after the command
             .split(' ') // split with spaces
-        ) // The bot
+          , this) // The bot
       }
     })
   }
