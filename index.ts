@@ -2,9 +2,7 @@ import { Client, Message, MessageOptions } from 'discord.js'
 type Return = (MessageOptions | string | void)
 type Command = (message: Message, args: string[], bot: Bot) => Return | Promise<Return>
 
-interface Commands {
-  [key: string]: Command
-}
+type Commands = Map<string, Command>
 
 interface Config {
   prefix: string | string[],
@@ -14,7 +12,7 @@ interface Config {
 class Bot extends Client {
   commands: Commands
   constructor(
-    commands: Commands = {},
+    commands: Commands = new Map<string, Command>(),
     options: Config = {
       prefix: '-',
       allowbots: false
@@ -25,66 +23,52 @@ class Bot extends Client {
     this.on('message', message => {
       // When a message is sent
       if (options.allowbots || !message.author?.bot) { // oh god
+        const content = message.content || ''
         // not a bot
         // matches commands that are just the command
         let name
         if (typeof options.prefix === 'string') {
-          name = Object.keys(this.commands).find(cmdname => {
-            return (message.content || '').startsWith(`${options.prefix}${cmdname} `) // matches any command with a space after
-              || (message.content || '') === `${options.prefix}${cmdname}` // matches any command without arguments
-          })
-        } else if ('length' in options.prefix) { // is array
+          for (const cmdname of this.commands.keys()) {
+            if (
+              content.startsWith(`${options.prefix}${cmdname} `) // matches any command with a space after
+              || content === `${options.prefix}${cmdname}` // matches any command without arguments
+            ) {
+              name = cmdname
+              break
+            }
+          }
+        } else if (Array.isArray(options.prefix)) { // is array
           const prefixes = options.prefix
-          name = Object.keys(this.commands).find(cmdname => {
-            return prefixes.some(prefix => (message.content || '').startsWith(`${prefix}${cmdname} `)) // matches any command with a space after
-              || prefixes.some(prefix => (message.content || '') === `${prefix}${cmdname}`) // matches any command without arguments
-          })
+          for (const cmdname of this.commands.keys()) {
+            if (
+              prefixes.some(prefix => content.startsWith(`${prefix}${cmdname} `)) // matches any command with a space after
+              || prefixes.some(prefix => content === `${prefix}${cmdname}`) // matches any command without arguments
+            ) {
+              name = cmdname
+              break
+            }
+          }
         }
 
         // Run the command!
         if (name) {
-          const output = this.commands[name](
+          const command = this.commands.get(name) || function () { }
+          const output = command(
             message as Message, // the message
             // The arguments
-            (message.content || '')// the content of the message
+            content
               .substring(options.prefix.length + 1 + name.length) // only the part after the command
               .split(' ') // split with spaces
-            , this) // The bot
+            , this // The bot
+          )
           if (output) {
-            ; (async () => {
-              if (output instanceof Promise) {
-                message.channel?.send(await output)
-              } else message.channel?.send(output)
-            })()
+            if (output instanceof Promise) {
+              output.then(message.channel?.send.bind(message.channel))
+            } else message.channel?.send(output)
           }
         }
       }
     })
-  }
-
-  add (commands: Commands): void
-  add (name: string, func: Command): void
-  add (name: string | Commands, func?: Command): void {
-    if (typeof name === 'object' && !func) {
-      return Object.keys(name).forEach(com => {
-        this.commands[com] = name[com]
-      })
-    }
-    if (typeof name === 'string' && func) this.commands[name] = func
-  }
-
-  remove (name: string | Array<string>): void {
-    if (typeof name === 'string') delete this.commands[name]
-
-    if (name instanceof Array) {
-      name.forEach(com => {
-        delete this.commands[com]
-      })
-    }
-  }
-
-  get (name: string): Function {
-    return this.commands[name]
   }
 }
 
