@@ -37,7 +37,7 @@ class Bot extends Client {
               break
             }
           }
-        } else if (Array.isArray(options.prefix)) { // is array
+        } else { // is array
           const prefixes = options.prefix
           for (const cmdname of this.commands.keys()) {
             if (
